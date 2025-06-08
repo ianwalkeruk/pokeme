@@ -211,7 +211,7 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push("│           │".to_string());
-            lines.push(format!("│  {} {} {}  │", suit_symbol, suit_symbol, suit_symbol));
+            lines.push(format!("│  {} {} {}    │", suit_symbol, suit_symbol, suit_symbol));
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
         },
