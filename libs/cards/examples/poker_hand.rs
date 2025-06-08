@@ -25,44 +25,42 @@ fn main() {
         use cards::display::UnicodeDisplay;
         
         println!("\nYour poker hand:");
-        println!("┌─────┐┌─────┐┌─────┐┌─────┐┌─────┐");
+        println!("┌───┐┌───┐┌───┐┌───┐┌───┐");
         
         // Print card values
-        print!("│");
         for card in &hand {
-            #[cfg(feature = "jokers")]
-            if card.rank == cards::Rank::Joker {
-                print!(" 🃏 │");
-                continue;
-            }
+            // #[cfg(feature = "jokers")]
+            // if card.rank == cards::Rank::Joker {
+            //     print!("│ 🃏 │");
+            //     continue;
+            // }
             
             let rank = card.rank.to_unicode();
             if rank.len() == 1 {
-                print!(" {} │", rank);
+                print!("│ {rank} │");
             } else {
-                print!("{} │", rank);
+                print!("│{rank} │");
             }
         }
         println!("");
         
         // Print suits
-        print!("│");
         for card in &hand {
             #[cfg(feature = "jokers")]
             if card.rank == cards::Rank::Joker {
-                print!("   │");
+                print!("│   │");
                 continue;
             }
             
             if let Some(suit) = card.suit {
-                print!(" {} │", suit.to_unicode());
+                print!("│ {} │", suit.to_unicode());
             } else {
-                print!("   │");
+                print!("│   │");
             }
         }
         println!("");
         
-        println!("└─────┘└─────┘└─────┘└─────┘└─────┘");
+        println!("└───┘└───┘└───┘└───┘└───┘");
     }
     
     #[cfg(not(feature = "display"))]
