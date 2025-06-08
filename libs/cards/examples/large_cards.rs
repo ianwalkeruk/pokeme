@@ -1,3 +1,4 @@
+#[cfg(feature = "display")]
 use cards::{Card, Deck, Rank, Suit};
 
 fn main() {
