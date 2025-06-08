@@ -234,12 +234,12 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
         },
         Rank::Ten => {
-            // Ten pips
+            // Ten pips (plus 2 corners = 12 total)
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push(format!("│     {}     │", suit_symbol));
-            lines.push(format!("│     {}     │", suit_symbol));
+            lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
+            lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
         },
         Rank::Jack => {
