@@ -14,8 +14,11 @@ fn test_large_cards_display_single_card() {
     
     // Check that the display contains the correct elements
     assert!(display.contains("┌───────────┐"));
-    assert!(display.contains("│A ♠        │"));
+    assert!(display.contains("│A          │"));
+    assert!(display.contains("│♠          │"));
     assert!(display.contains("│     ♠     │"));
+    assert!(display.contains("│          ♠│"));
+    assert!(display.contains("│          A│"));
     assert!(display.contains("└───────────┘"));
 }
 
@@ -29,8 +32,10 @@ fn test_large_cards_display_multiple_cards() {
     let display = cards.to_large_cards();
     
     // Check that both cards are in the display
-    assert!(display.contains("│A ♠        │"));
-    assert!(display.contains("│K ♥        │"));
+    assert!(display.contains("│A          │"));
+    assert!(display.contains("│♠          │"));
+    assert!(display.contains("│K          │"));
+    assert!(display.contains("│♥          │"));
 }
 
 #[test]
@@ -44,16 +49,18 @@ fn test_large_cards_display_number_cards() {
     let display = cards.to_large_cards();
     
     // Check for the correct number of pips
-    assert!(display.contains("│2 ♣        │"));
-    assert!(display.contains("│5 ♦        │"));
+    assert!(display.contains("│2          │"));
+    assert!(display.contains("│♣          │"));
+    assert!(display.contains("│5          │"));
+    assert!(display.contains("│♦          │"));
     
     // Two should have 2 pips
     let two_pips = display.matches("♣").count();
-    assert!(two_pips >= 3); // 1 for the corner + 2 for the pips
+    assert!(two_pips >= 4); // 2 for the corners + 2 for the pips
     
     // Five should have 5 pips
     let five_pips = display.matches("♦").count();
-    assert!(five_pips >= 6); // 1 for the corner + 5 for the pips
+    assert!(five_pips >= 7); // 2 for the corners + 5 for the pips
 }
 
 #[test]
@@ -80,7 +87,9 @@ fn test_large_cards_display_joker() {
     let display = cards.to_large_cards();
     
     // Check for joker-specific elements
-    assert!(display.contains("│ JOKER     │"));
+    assert!(display.contains("│J          │"));
+    assert!(display.contains("│🃏          │"));
     assert!(display.contains("│  | o o |  │"));
-    assert!(display.contains("│     JOKER │"));
+    assert!(display.contains("│          🃏│"));
+    assert!(display.contains("│          J│"));
 }

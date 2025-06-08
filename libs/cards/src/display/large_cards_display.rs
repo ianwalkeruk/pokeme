@@ -18,15 +18,16 @@ use super::UnicodeDisplay;
 /// println!("{}", display);
 /// // Output:
 /// // ┌───────────┐┌───────────┐
-/// // │A ♠        ││K ♥        │
+/// // │A          ││K          │
+/// // │♠          ││♥          │
 /// // │           ││           │
 /// // │           ││   _____   │
 /// // │           ││  |/|\|\|  │
 /// // │     ♠     ││  | K   |  │
 /// // │           ││  |\|\|/|  │
 /// // │           ││  |_____|  │
-/// // │           ││           │
-/// // │        A ♠││        K ♥│
+/// // │          ♠││          ♥│
+/// // │          A││          K│
 /// // └───────────┘└───────────┘
 /// ```
 pub trait LargeCardsDisplay {
@@ -50,7 +51,7 @@ impl LargeCardsDisplay for Vec<Card> {
             return String::from("No cards");
         }
 
-        const CARD_HEIGHT: usize = 11;
+        const CARD_HEIGHT: usize = 12;
         
         // Initialize the result with empty strings for each line
         let mut result_lines: Vec<String> = vec![String::new(); CARD_HEIGHT];
@@ -62,7 +63,9 @@ impl LargeCardsDisplay for Vec<Card> {
             
             // Add each line to the result
             for (i, line) in card_lines.iter().enumerate() {
-                result_lines[i].push_str(line);
+                if i < CARD_HEIGHT {
+                    result_lines[i].push_str(line);
+                }
             }
         }
         
@@ -73,7 +76,7 @@ impl LargeCardsDisplay for Vec<Card> {
 
 // Helper function to get the representation of a single card
 fn get_large_card_representation(card: &Card) -> Vec<String> {
-    const CARD_HEIGHT: usize = 11;
+    const CARD_HEIGHT: usize = 12;
     
     let mut lines = Vec::with_capacity(CARD_HEIGHT);
     
@@ -109,25 +112,34 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
     #[cfg(feature = "jokers")]
     if card.rank == Rank::Joker {
         // Joker card
-        lines.push("│ JOKER     │".to_string());
-        lines.push("│           │".to_string());
-        lines.push("│    ___    │".to_string());
-        lines.push("│   /   \\   │".to_string());
-        lines.push("│  | o o |  │".to_string());
-        lines.push("│  |  >  |  │".to_string());
-        lines.push("│   \\_-_/   │".to_string());
-        lines.push("│           │".to_string());
-        lines.push("│     JOKER │".to_string());
-        lines.push("└───────────┘".to_string());
-        return lines;
+        let mut joker_lines = Vec::with_capacity(CARD_HEIGHT);
+        joker_lines.push("┌───────────┐".to_string());
+        joker_lines.push("│J          │".to_string());
+        joker_lines.push("│🃏          │".to_string());
+        joker_lines.push("│           │".to_string());
+        joker_lines.push("│    ___    │".to_string());
+        joker_lines.push("│   /   \\   │".to_string());
+        joker_lines.push("│  | o o |  │".to_string());
+        joker_lines.push("│  |  >  |  │".to_string());
+        joker_lines.push("│   \\_-_/   │".to_string());
+        joker_lines.push("│           │".to_string());
+        joker_lines.push("│          🃏│".to_string());
+        joker_lines.push("│          J│".to_string());
+        joker_lines.push("└───────────┘".to_string());
+        
+        // Only return the first CARD_HEIGHT lines
+        return joker_lines.into_iter().take(CARD_HEIGHT).collect();
     }
     
     // Top left rank and suit
     if rank_symbol == "10" {
-        lines.push(format!("│{}{}        │", rank_symbol, suit_symbol));
+        lines.push(format!("│{}         │", rank_symbol));
     } else {
-        lines.push(format!("│{} {}        │", rank_symbol, suit_symbol));
+        lines.push(format!("│{}          │", rank_symbol));
     }
+    
+    // Add suit below rank in top left
+    lines.push(format!("│{}          │", suit_symbol));
     
     // Middle part with pips or face card art
     match card.rank {
@@ -139,13 +151,11 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push(format!("│     {}     │", suit_symbol));
             lines.push("│           │".to_string());
             lines.push("│           │".to_string());
-            lines.push("│           │".to_string());
         },
         Rank::Two => {
             // Two pips
             lines.push("│           │".to_string());
             lines.push(format!("│     {}     │", suit_symbol));
-            lines.push("│           │".to_string());
             lines.push("│           │".to_string());
             lines.push("│           │".to_string());
             lines.push(format!("│     {}     │", suit_symbol));
@@ -159,13 +169,11 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push(format!("│     {}     │", suit_symbol));
             lines.push("│           │".to_string());
             lines.push(format!("│     {}     │", suit_symbol));
-            lines.push("│           │".to_string());
         },
         Rank::Four => {
             // Four pips
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push("│           │".to_string());
             lines.push("│           │".to_string());
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
@@ -179,7 +187,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push(format!("│     {}     │", suit_symbol));
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push("│           │".to_string());
         },
         Rank::Six => {
             // Six pips
@@ -189,7 +196,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push("│           │".to_string());
         },
         Rank::Seven => {
             // Seven pips
@@ -199,7 +205,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push(format!("│  {} {} {}  │", suit_symbol, suit_symbol, suit_symbol));
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push("│           │".to_string());
         },
         Rank::Eight => {
             // Eight pips
@@ -209,7 +214,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push("│           │".to_string());
             lines.push(format!("│     {}     │", suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push("│           │".to_string());
         },
         Rank::Nine => {
             // Nine pips
@@ -219,7 +223,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push(format!("│     {}     │", suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push("│           │".to_string());
         },
         Rank::Ten => {
             // Ten pips
@@ -228,7 +231,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push(format!("│     {}     │", suit_symbol));
             lines.push(format!("│     {}     │", suit_symbol));
-            lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
         },
         Rank::Jack => {
@@ -239,7 +241,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push("│  | J   |  │".to_string());
             lines.push("│  |     |  │".to_string());
             lines.push("│  |_____|  │".to_string());
-            lines.push("│           │".to_string());
         },
         Rank::Queen => {
             // Queen face
@@ -249,7 +250,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push("│  | Q   |  │".to_string());
             lines.push("│  \\_____/  │".to_string());
             lines.push("│    /_\\    │".to_string());
-            lines.push("│           │".to_string());
         },
         Rank::King => {
             // King face
@@ -259,7 +259,6 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push("│  | K   |  │".to_string());
             lines.push("│  |\\|\\|/|  │".to_string());
             lines.push("│  |_____|  │".to_string());
-            lines.push("│           │".to_string());
         },
         #[cfg(feature = "jokers")]
         Rank::Joker => {
@@ -268,11 +267,14 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
         },
     }
     
-    // Bottom right rank and suit
+    // Bottom right suit (above rank)
+    lines.push(format!("│          {}│", suit_symbol));
+    
+    // Bottom right rank
     if rank_symbol == "10" {
-        lines.push(format!("│        {}{}│", rank_symbol, suit_symbol));
+        lines.push(format!("│         {}│", rank_symbol));
     } else {
-        lines.push(format!("│        {} {}│", rank_symbol, suit_symbol));
+        lines.push(format!("│          {}│", rank_symbol));
     }
     
     // Bottom border
