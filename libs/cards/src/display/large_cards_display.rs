@@ -211,7 +211,7 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push("│           │".to_string());
-            lines.push(format!("│  {} {} {}    │", suit_symbol, suit_symbol, suit_symbol));
+            lines.push(format!("│  {}  {}  {}  │", suit_symbol, suit_symbol, suit_symbol));
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
         },
@@ -227,19 +227,19 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
         Rank::Nine => {
             // Nine pips
             lines.push("│           │".to_string());
-            lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
+            lines.push(format!("│    {} {}    │", suit_symbol, suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
             lines.push(format!("│     {}     │", suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
+            lines.push(format!("│    {} {}    │", suit_symbol, suit_symbol));
         },
         Rank::Ten => {
-            // Ten pips (plus 2 corners = 12 total)
+            // Ten pips
             lines.push("│           │".to_string());
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
+            lines.push(format!("│    {} {}    │", suit_symbol, suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
-            lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
+            lines.push(format!("│    {} {}    │", suit_symbol, suit_symbol));
             lines.push(format!("│  {}     {}  │", suit_symbol, suit_symbol));
         },
         Rank::Jack => {
