@@ -114,16 +114,9 @@ fn test_large_cards_dimensions() {
             // Count the actual characters (Unicode aware)
             let char_count = line.chars().count();
             
-            // For debugging
-            if char_count != EXPECTED_WIDTH {
-                println!("Line {}: '{}' has {} chars", i, line, char_count);
-            }
-            
-            // Some lines might have different widths due to Unicode characters
-            // or special formatting, so we'll check that they're at least 11 characters
-            assert!(char_count >= 11, 
-                "Card {:?} line {} has insufficient width: expected at least 11, got {}", 
-                card, i, char_count);
+            assert_eq!(char_count, EXPECTED_WIDTH, 
+                "Card {:?} line {} has incorrect width: expected {}, got {}", 
+                card, i, EXPECTED_WIDTH, char_count);
         }
     }
 }
