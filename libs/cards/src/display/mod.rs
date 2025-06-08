@@ -1,7 +1,10 @@
 use crate::{Card, Rank, Suit};
 
 mod cards_display;
+mod large_cards_display;
+
 pub use cards_display::SmallCardsDisplay;
+pub use large_cards_display::LargeCardsDisplay;
 
 #[cfg(test)]
 mod tests;

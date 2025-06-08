@@ -11,7 +11,7 @@ fn main() {
 
     #[cfg(feature = "display")]
     {
-        use cards::display::{UnicodeDisplay, SmallCardsDisplay};
+        use cards::display::{UnicodeDisplay, SmallCardsDisplay, LargeCardsDisplay};
         
         println!("Card Display Options Demo\n");
         
@@ -30,8 +30,12 @@ fn main() {
         let hand = vec![ace_spades, king_hearts, queen_diamonds];
         println!("{}", hand.to_small_cards());
         
-        // 3. Display a poker hand
-        println!("\n3. Poker Hand (5 cards):");
+        // 3. Display the same hand with LargeCardsDisplay
+        println!("\n3. Hand Display (LargeCardsDisplay):");
+        println!("{}", hand.to_large_cards());
+        
+        // 4. Display a poker hand
+        println!("\n4. Poker Hand (5 cards):");
         let mut deck = Deck::new_shuffled();
         let mut poker_hand = Vec::with_capacity(5);
         
@@ -41,10 +45,14 @@ fn main() {
             }
         }
         
+        println!("Small display:");
         println!("{}", poker_hand.to_small_cards());
         
-        // 4. Display a full deck by suit
-        println!("\n4. Full Deck Display (by suit):");
+        println!("\nLarge display:");
+        println!("{}", poker_hand.to_large_cards());
+        
+        // 5. Display a full deck by suit
+        println!("\n5. Full Deck Display (by suit):");
         
         // Create a new deck and organize cards by suit
         let mut full_deck = Deck::new();
@@ -67,7 +75,7 @@ fn main() {
             }
         }
         
-        // Display each suit
+        // Display each suit (using small cards for brevity)
         println!("\nClubs suit:");
         println!("{}", clubs.to_small_cards());
         
@@ -80,15 +88,20 @@ fn main() {
         println!("\nSpades suit:");
         println!("{}", spades.to_small_cards());
         
-        // 5. Jokers (if enabled)
+        // 6. Jokers (if enabled)
         #[cfg(feature = "jokers")]
         {
-            println!("\n5. Jokers:");
+            println!("\n6. Jokers:");
             let jokers = vec![
                 Card::new(Rank::Joker, None),
                 Card::new(Rank::Joker, None),
             ];
+            
+            println!("Small display:");
             println!("{}", jokers.to_small_cards());
+            
+            println!("\nLarge display:");
+            println!("{}", jokers.to_large_cards());
         }
     }
 }
