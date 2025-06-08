@@ -12,8 +12,6 @@ fn main() {
     println!("\nDealing a hand of 5 cards...");
     for i in 1..=5 {
         if let Some(card) = deck.draw() {
-            hand.push(card);
-            
             // If display feature is enabled, show the card with unicode representation
             #[cfg(feature = "display")]
             {
@@ -24,10 +22,20 @@ fn main() {
             // If display feature is not enabled, just show the card index
             #[cfg(not(feature = "display"))]
             println!("Card {}: Rank {:?}, Suit {:?}", i, card.rank, card.suit);
+            
+            hand.push(card);
         } else {
             println!("Deck is empty!");
             break;
         }
+    }
+    
+    // Display the complete hand using SmallCardsDisplay
+    #[cfg(feature = "display")]
+    {
+        use cards::display::SmallCardsDisplay;
+        println!("\nYour complete hand:");
+        println!("{}", hand.to_small_cards());
     }
     
     println!("\nRemaining cards in deck: {}", deck.len());
