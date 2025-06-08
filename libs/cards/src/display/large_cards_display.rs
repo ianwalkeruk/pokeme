@@ -134,17 +134,7 @@ fn get_large_card_representation(card: &Card) -> Vec<String> {
         joker_lines.push("│  |  >  |  │".to_string());
         joker_lines.push("│   \\_-_/   │".to_string());
         joker_lines.push("│           │".to_string());
-        joker_lines.push("│           │".to_string());
         joker_lines.push("│      JOKER│".to_string());
-        
-        // Make sure we have exactly CARD_HEIGHT lines
-        if joker_lines.len() < CARD_HEIGHT - 1 {
-            for _ in joker_lines.len()..(CARD_HEIGHT - 1) {
-                joker_lines.push("│           │".to_string());
-            }
-        }
-        
-        // Add the bottom border
         joker_lines.push("╰───────────╯".to_string());
         
         return joker_lines;

@@ -6,6 +6,81 @@ mod props_large_cards {
 
     proptest! {
         #[test]
+        fn large_cards_display_has_proper_borders(rank in 1u8..14) {
+            // Convert the u8 to a Rank
+            let rank = match rank {
+                1 => Rank::Ace,
+                2 => Rank::Two,
+                3 => Rank::Three,
+                4 => Rank::Four,
+                5 => Rank::Five,
+                6 => Rank::Six,
+                7 => Rank::Seven,
+                8 => Rank::Eight,
+                9 => Rank::Nine,
+                10 => Rank::Ten,
+                11 => Rank::Jack,
+                12 => Rank::Queen,
+                13 => Rank::King,
+                _ => unreachable!(),
+            };
+            
+            // Create a card with the rank and a suit
+            let card = Card::new(rank, Some(Suit::Spades));
+            let cards = vec![card];
+            
+            // Get the display string
+            let display = cards.to_large_cards();
+            
+            // Check for top border
+            prop_assert!(display.contains("╭───────────╮"), 
+                "Card with rank {:?} is missing top border", rank);
+            
+            // Check for bottom border
+            prop_assert!(display.contains("╰───────────╯"), 
+                "Card with rank {:?} is missing bottom border", rank);
+            
+            // Check for side borders (should have at least 10 vertical bars)
+            let side_borders = display.matches("│").count();
+            prop_assert!(side_borders >= 10, 
+                "Card with rank {:?} has insufficient side borders: {}", rank, side_borders);
+            
+            // Check that the display has the correct number of lines
+            let lines = display.lines().count();
+            prop_assert_eq!(lines, 12, 
+                "Card with rank {:?} should have exactly 12 lines, but has {}", rank, lines);
+        }
+        
+        #[cfg(feature = "jokers")]
+        #[test]
+        fn joker_card_has_proper_borders(_dummy in 0..1) {
+            // Create a joker card
+            let card = Card::new(Rank::Joker, None);
+            let cards = vec![card];
+            
+            // Get the display string
+            let display = cards.to_large_cards();
+            
+            // Check for top border
+            prop_assert!(display.contains("╭───────────╮"), 
+                "Joker card is missing top border");
+            
+            // Check for bottom border
+            prop_assert!(display.contains("╰───────────╯"), 
+                "Joker card is missing bottom border");
+            
+            // Check for side borders (should have at least 10 vertical bars)
+            let side_borders = display.matches("│").count();
+            prop_assert!(side_borders >= 10, 
+                "Joker card has insufficient side borders: {}", side_borders);
+            
+            // Check that the display has the correct number of lines
+            let lines = display.lines().count();
+            prop_assert_eq!(lines, 12, 
+                "Joker card should have exactly 12 lines, but has {}", lines);
+        }
+        
+        #[test]
         fn large_cards_display_has_correct_pip_count(rank in 1u8..10) {
             // Convert the u8 to a Rank
             let rank = match rank {
