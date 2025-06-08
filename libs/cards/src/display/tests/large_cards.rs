@@ -13,13 +13,13 @@ fn test_large_cards_display_single_card() {
     let display = cards.to_large_cards();
     
     // Check that the display contains the correct elements
-    assert!(display.contains("┌───────────┐"));
+    assert!(display.contains("╭───────────╮"));
     assert!(display.contains("│A          │"));
     assert!(display.contains("│♠          │"));
-    assert!(display.contains("│     ♠     │"));
+    assert!(display.contains("│  |  ♠  |  │"));
     assert!(display.contains("│          ♠│"));
     assert!(display.contains("│          A│"));
-    assert!(display.contains("└───────────┘"));
+    assert!(display.contains("╰───────────╯"));
 }
 
 #[test]
@@ -87,9 +87,7 @@ fn test_large_cards_display_joker() {
     let display = cards.to_large_cards();
     
     // Check for joker-specific elements
-    assert!(display.contains("│J          │"));
-    assert!(display.contains("│🃏          │"));
-    assert!(display.contains("│  | o o |  │"));
-    assert!(display.contains("│          🃏│"));
-    assert!(display.contains("│          J│"));
+    assert!(display.contains("JOKER"));
+    assert!(display.contains("| o o |"));
+    assert!(display.contains("|  >  |"));
 }
