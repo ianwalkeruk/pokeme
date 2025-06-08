@@ -6,6 +6,9 @@ use serde::{Deserialize, Serialize};
 #[cfg(test)]
 mod tests;
 
+#[cfg(feature = "display")]
+pub mod display;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum Suit {

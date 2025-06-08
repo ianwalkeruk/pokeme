@@ -1,5 +1,5 @@
 use super::super::*;
-use cards::{Card, Rank, Suit};
+use crate::{Card, Rank, Suit};
 
 #[test]
 fn test_suit_unicode() {

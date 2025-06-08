@@ -39,14 +39,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cards_display"
-version = "0.1.0"
-dependencies = [
- "cards",
- "proptest",
-]
-
-[[package]]
 name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"

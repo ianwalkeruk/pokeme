@@ -11,6 +11,9 @@ serde = { version = "1.0.219", features = ["derive"], optional = true }
 default = []
 jokers = []
 serde = ["dep:serde"]
+display = []
+display_unicode = ["display"]
+display_ascii = ["display"]
 
 [dev-dependencies]
 proptest = "1.7.0"

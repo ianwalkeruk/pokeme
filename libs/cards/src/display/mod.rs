@@ -1,4 +1,4 @@
-use cards::{Card, Rank, Suit};
+use crate::{Card, Rank, Suit};
 
 #[cfg(test)]
 mod tests;
