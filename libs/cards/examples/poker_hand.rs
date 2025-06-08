@@ -22,45 +22,10 @@ fn main() {
     // Display the hand
     #[cfg(feature = "display")]
     {
-        use cards::display::UnicodeDisplay;
+        use cards::display::SmallCardsDisplay;
         
         println!("\nYour poker hand:");
-        println!("┌───┐┌───┐┌───┐┌───┐┌───┐");
-        
-        // Print card values
-        for card in &hand {
-            // #[cfg(feature = "jokers")]
-            // if card.rank == cards::Rank::Joker {
-            //     print!("│ 🃏 │");
-            //     continue;
-            // }
-            
-            let rank = card.rank.to_unicode();
-            if rank.len() == 1 {
-                print!("│ {rank} │");
-            } else {
-                print!("│{rank} │");
-            }
-        }
-        println!("");
-        
-        // Print suits
-        for card in &hand {
-            #[cfg(feature = "jokers")]
-            if card.rank == cards::Rank::Joker {
-                print!("│   │");
-                continue;
-            }
-            
-            if let Some(suit) = card.suit {
-                print!("│ {} │", suit.to_unicode());
-            } else {
-                print!("│   │");
-            }
-        }
-        println!("");
-        
-        println!("└───┘└───┘└───┘└───┘└───┘");
+        println!("{}", hand.to_small_cards());
     }
     
     #[cfg(not(feature = "display"))]

@@ -1,5 +1,8 @@
 use crate::{Card, Rank, Suit};
 
+mod cards_display;
+pub use cards_display::SmallCardsDisplay;
+
 #[cfg(test)]
 mod tests;
 
