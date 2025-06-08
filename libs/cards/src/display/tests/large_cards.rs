@@ -1,4 +1,4 @@
-use crate::{Card, Rank, Suit};
+use crate::{Card, Rank, Suit, Deck};
 use crate::display::LargeCardsDisplay;
 
 #[test]
@@ -90,4 +90,31 @@ fn test_large_cards_display_joker() {
     assert!(display.contains("JOKER"));
     assert!(display.contains("| o o |"));
     assert!(display.contains("|  >  |"));
+}
+
+#[test]
+fn test_large_cards_dimensions() {
+    let deck = Deck::new();
+    // TODO for every card in the deck:
+    // 1. Ensure the card has the right number of lines
+    // 2. Ensure every line is the right width
+}
+
+#[test]
+fn test_large_cards_borders() {
+    let deck = Deck::new();
+    // TODO for every card in the deck:
+    // 1. Ensure the top border has the correct corners and lines
+    // 2. Ensure the bottom border has the correct corners and lines
+    // 3. Ensure the lines between the top and bottom have vertical bars as the first and last characters
+}
+
+#[test]
+fn test_large_cards_pips() {
+    let deck = Deck::new();
+    // TODO for every card in the deck:
+    // Check the number of suit symbols on the card:
+    // For Aces and face cards, there should be 2
+    // For Number cards, there should be 2 more than the number value
+    // For Jokers there should be none
 }
