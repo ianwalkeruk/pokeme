@@ -1,9 +1,9 @@
 use super::super::*;
 
 #[test]
+#[cfg(not(feature = "jokers"))]
 fn test_deck_has_52_cards_without_jokers() {
     let deck = Deck::new();
-    #[cfg(not(feature = "jokers"))]
     assert_eq!(deck.len(), 52);
 }
 
