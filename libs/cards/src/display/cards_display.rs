@@ -1,7 +1,7 @@
+use super::UnicodeDisplay;
 use crate::Card;
 #[cfg(feature = "jokers")]
 use crate::Rank;
-use super::UnicodeDisplay;
 
 /// Extension trait for Vec<Card> to display cards in a small unicode format
 ///
@@ -45,11 +45,11 @@ impl SmallCardsDisplay for Vec<Card> {
         }
 
         let mut result = String::new();
-        
+
         // Top border
         result.push_str(&format!("┌───┐{}", "┌───┐".repeat(self.len() - 1)));
         result.push('\n');
-        
+
         // Card ranks
         for card in self {
             #[cfg(feature = "jokers")]
@@ -57,7 +57,7 @@ impl SmallCardsDisplay for Vec<Card> {
                 result.push_str("│ 🃏 │");
                 continue;
             }
-            
+
             let rank = card.rank.to_unicode();
             if rank.len() == 1 {
                 result.push_str(&format!("│ {rank} │"));
@@ -66,7 +66,7 @@ impl SmallCardsDisplay for Vec<Card> {
             }
         }
         result.push('\n');
-        
+
         // Card suits
         for card in self {
             #[cfg(feature = "jokers")]
@@ -74,7 +74,7 @@ impl SmallCardsDisplay for Vec<Card> {
                 result.push_str("│   │");
                 continue;
             }
-            
+
             if let Some(suit) = card.suit {
                 result.push_str(&format!("│ {} │", suit.to_unicode()));
             } else {
@@ -82,10 +82,10 @@ impl SmallCardsDisplay for Vec<Card> {
             }
         }
         result.push('\n');
-        
+
         // Bottom border
         result.push_str(&format!("└───┘{}", "└───┘".repeat(self.len() - 1)));
-        
+
         result
     }
 }

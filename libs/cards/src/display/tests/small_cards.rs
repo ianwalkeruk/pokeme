@@ -1,5 +1,5 @@
-use crate::{Card, Rank, Suit};
 use crate::display::SmallCardsDisplay;
+use crate::{Card, Rank, Suit};
 
 #[test]
 fn test_small_cards_display_empty() {
@@ -49,9 +49,9 @@ fn test_small_cards_display_all_ranks() {
         Card::new(Rank::Queen, Some(Suit::Spades)),
         Card::new(Rank::King, Some(Suit::Spades)),
     ];
-    
+
     let display = cards.to_small_cards();
-    
+
     // Check that each rank appears in the display
     assert!(display.contains("│ A │"));
     assert!(display.contains("│ 2 │"));
@@ -76,9 +76,9 @@ fn test_small_cards_display_all_suits() {
         Card::new(Rank::Ace, Some(Suit::Hearts)),
         Card::new(Rank::Ace, Some(Suit::Spades)),
     ];
-    
+
     let display = cards.to_small_cards();
-    
+
     // Check that each suit appears in the display
     assert!(display.contains("│ ♣ │"));
     assert!(display.contains("│ ♦ │"));
@@ -92,10 +92,10 @@ fn test_small_cards_display_format() {
         Card::new(Rank::Ace, Some(Suit::Spades)),
         Card::new(Rank::King, Some(Suit::Hearts)),
     ];
-    
+
     let display = cards.to_small_cards();
     let lines: Vec<&str> = display.lines().collect();
-    
+
     // Check the structure of the display
     assert_eq!(lines.len(), 4); // 4 lines: top border, ranks, suits, bottom border
     assert!(lines[0].starts_with("┌───┐")); // Top border
@@ -119,10 +119,7 @@ fn test_small_cards_display_with_joker() {
 #[cfg(feature = "jokers")]
 #[test]
 fn test_small_cards_display_only_jokers() {
-    let cards = vec![
-        Card::new(Rank::Joker, None),
-        Card::new(Rank::Joker, None),
-    ];
+    let cards = vec![Card::new(Rank::Joker, None), Card::new(Rank::Joker, None)];
     let expected = "┌───┐┌───┐\n│ 🃏 ││ 🃏 │\n│   ││   │\n└───┘└───┘";
     assert_eq!(cards.to_small_cards(), expected);
 }
